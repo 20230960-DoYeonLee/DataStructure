@@ -1,13 +1,13 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 
-// 1. 트리 노드 구조체 정의
+//트리 노드함수
 typedef struct TreeNode {
     int data;
     struct TreeNode* left, * right;
 } TreeNode;
 
-// 노드 생성 함수
+//노드 생성함수
 TreeNode* createNode(int data) {
     TreeNode* newNode = (TreeNode*)malloc(sizeof(TreeNode));
     newNode->data = data;
@@ -15,7 +15,7 @@ TreeNode* createNode(int data) {
     return newNode;
 }
 
-// 2. 순회 함수 (Traversal)
+//순회함수
 void preorder(TreeNode* root) {
     if (root) {
         printf("%d ", root->data);
@@ -40,9 +40,9 @@ void postorder(TreeNode* root) {
     }
 }
 
-// 3. 트리 분석 함수
+//트리 분석함수
 int getHeight(TreeNode* root) {
-    if (root == NULL) return -1; // 리프 노드 아래를 -1로 보아야 간선(Edge) 기준 높이 2가 나옴
+    if (root == NULL) return -1; //리프 노드 아래를 -1로 해야 앳지 기준 높이 2가 나옴
     int leftHeight = getHeight(root->left);
     int rightHeight = getHeight(root->right);
     return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
@@ -59,14 +59,14 @@ int countLeaves(TreeNode* root) {
     return countLeaves(root->left) + countLeaves(root->right);
 }
 
-// 4. 추가 작성 함수 (합계, 최댓값, 범위 탐색)
+//합계
 int getSum(TreeNode* root) {
     if (root == NULL) return 0;
     return root->data + getSum(root->left) + getSum(root->right);
 }
 
-int getMax(TreeNode* root) {
-    if (root == NULL) return -1; // 충분히 작은 값 반환
+int getMax(TreeNode* root) {//최댓값
+    if (root == NULL) return -1;
     int max = root->data;
     int leftMax = getMax(root->left);
     int rightMax = getMax(root->right);
@@ -76,9 +76,8 @@ int getMax(TreeNode* root) {
     return max;
 }
 
-void searchRange(TreeNode* root, int min, int max) {
+void searchRange(TreeNode* root, int min, int max) {//범위탐색
     if (root == NULL) return;
-    // 전위 순회 방식으로 범위를 체크하여 출력
     if (root->data >= min && root->data <= max) {
         printf("%d ", root->data);
     }
@@ -86,8 +85,8 @@ void searchRange(TreeNode* root, int min, int max) {
     searchRange(root->right, min, max);
 }
 
-// 메모리 해제
-void freeTree(TreeNode* root) {
+
+void freeTree(TreeNode* root) { // 메모리 해제
     if (root == NULL) return;
     freeTree(root->left);
     freeTree(root->right);
@@ -95,7 +94,6 @@ void freeTree(TreeNode* root) {
 }
 
 int main() {
-    // 트리 구성
     TreeNode* root = createNode(10);
     root->left = createNode(5);
     root->right = createNode(20);
